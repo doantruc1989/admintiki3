@@ -103,7 +103,7 @@ const SideBar = forwardRef(({ showNav }: any, ref: any) => {
           {productPage === true ? (
             <Menu.Items className="flex flex-col ml-12 gap-3 mb-3 text-sm">
               <Menu.Item>
-                <a
+                <Link
                   className={`rounded py-3 pl-2 text-center cursor-pointer flex items-center transition-colors ${
                     router.pathname == "/productmanagement"
                       ? "bg-blue-100 text-blue-500"
@@ -117,10 +117,10 @@ const SideBar = forwardRef(({ showNav }: any, ref: any) => {
                   <div>
                     <p>Product Page</p>
                   </div>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item>
-                <a
+                <Link
                   className={`rounded py-3 pl-2 text-center cursor-pointer flex items-center transition-colors ${
                     router.pathname == "/productvariant"
                       ? "bg-blue-100 text-blue-500"
@@ -134,7 +134,7 @@ const SideBar = forwardRef(({ showNav }: any, ref: any) => {
                   <div>
                     <p>Product Variants</p>
                   </div>
-                </a>
+                </Link>
               </Menu.Item>
             </Menu.Items>
           ) :null}
@@ -178,7 +178,7 @@ const SideBar = forwardRef(({ showNav }: any, ref: any) => {
           {review === true ? (
             <Menu.Items className="flex flex-col ml-12 gap-3 mb-3 text-sm">
               <Menu.Item>
-                <a
+                <Link
                   className={`rounded py-3 pl-2 text-center cursor-pointer flex items-center transition-colors ${
                     router.pathname == "/review"
                       ? "bg-blue-100 text-blue-500"
@@ -192,10 +192,10 @@ const SideBar = forwardRef(({ showNav }: any, ref: any) => {
                   <div>
                     <p>Review Page</p>
                   </div>
-                </a>
+                </Link>
               </Menu.Item>
               <Menu.Item>
-                <a
+                <Link
                   className={`rounded py-3 pl-2 text-center cursor-pointer flex items-center transition-colors ${
                     router.pathname == "/nestedreview"
                       ? "bg-blue-100 text-blue-500"
@@ -209,7 +209,7 @@ const SideBar = forwardRef(({ showNav }: any, ref: any) => {
                   <div>
                     <p>Nested Review page</p>
                   </div>
-                </a>
+                </Link>
               </Menu.Item>
             </Menu.Items>
           ) :null}
