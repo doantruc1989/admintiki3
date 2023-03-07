@@ -1,10 +1,10 @@
 import { Dialog, Transition } from "@headlessui/react";
 import axios from "axios";
-import { Breadcrumb, Button, Dropdown, Table, TextInput } from "flowbite-react";
+import { Breadcrumb, Button, Dropdown, Table, Textarea, TextInput } from "flowbite-react";
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Layout from "../components/Layout";
-import { FaHome, FaEdit } from "react-icons/fa";
+import { FaHome, FaEdit, FaTrash } from "react-icons/fa";
 import Link from "next/link";
 import CheckAuth from "../components/CheckAuth";
 
@@ -17,7 +17,7 @@ function Index() {
   const [editCategory, setEditCategory] = useState("");
   const [editImage, setEditImage] = useState("");
   const [editPath, setEditPath] = useState("");
-  // const [editUserRole, setEditUserRole] = useState('');
+
 
   useEffect(() => {
     try {
@@ -29,7 +29,6 @@ function Index() {
     }
   }, []);
 
-  console.log(categoryByid);
   return (
     <div className="my-6">
       <Breadcrumb aria-label="Default breadcrumb example" className="my-6">
@@ -41,18 +40,14 @@ function Index() {
       <CheckAuth />
       <Dropdown label="Hero management" dismissOnClick={false}>
         <Dropdown.Item>
-          <Link href={"/homemanagement/hero1management"}>
-          Hero1
-          </Link>
-         </Dropdown.Item>
-        <Dropdown.Item><Link href={"/homemanagement/hero2management"}>
-          Hero2
-          </Link></Dropdown.Item>
+          <Link href={"/homemanagement/hero1management"}>Hero1</Link>
+        </Dropdown.Item>
         <Dropdown.Item>
-          <Link href={"/homemanagement/hero5management"}>
-          Hero5
-          </Link>
-          </Dropdown.Item>
+          <Link href={"/homemanagement/hero2management"}>Hero2</Link>
+        </Dropdown.Item>
+        <Dropdown.Item>
+          <Link href={"/homemanagement/hero5management"}>Hero5</Link>
+        </Dropdown.Item>
       </Dropdown>
 
       <h1 className="mb-6 font-bold uppercase text-xl text-center">
@@ -104,7 +99,7 @@ function Index() {
                             }
                           }}
                         >
-                          <FaEdit className="text-xl"/>
+                          <FaEdit className="text-xl" />
                         </a>
                       </Table.Cell>
                     </Table.Row>
@@ -133,103 +128,98 @@ function Index() {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    <Dialog.Title
+                  <Dialog.Panel className="w-full md:w-1/2 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="my-6 text-center text-lg font-medium leading-6 text-gray-900"
                     >
-                      Edit Category
+                      Edit HomePage
                     </Dialog.Title>
+                    
+                    <div className="items-center w-full gap-2">
 
-                    <Table hoverable={true}>
-                      <Table.Head>
-                        <Table.HeadCell>ID</Table.HeadCell>
-                        <Table.HeadCell>Category</Table.HeadCell>
-                        <Table.HeadCell>Image</Table.HeadCell>
-                        <Table.HeadCell>Path</Table.HeadCell>
-                        <Table.HeadCell>
-                          <span className="sr-only">Edit</span>
-                        </Table.HeadCell>
-                      </Table.Head>
-                      <Table.Body className="divide-y">
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                          <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            {categoryByid.id}
-                          </Table.Cell>
-                          <Table.Cell>{categoryByid.category}</Table.Cell>
-                          <Table.Cell>{categoryByid.image}</Table.Cell>
-                          <Table.Cell>{categoryByid.path}</Table.Cell>
-                          <Table.Cell>
-                            <div>
-                              <a
-                                className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500"
-                                onClick={() => {
-                                  setDeleteModal(!deleteModal);
-                                }}
-                              >
-                                Delete
-                              </a>
-                            </div>
-                          </Table.Cell>
-                        </Table.Row>
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                          <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            {categoryByid.id}
-                          </Table.Cell>
-                          <Table.Cell>
-                            <TextInput
-                              value={editCategory}
-                              onChange={(e) => setEditCategory(e.target.value)}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>
-                            <TextInput
-                              value={editImage}
-                              onChange={(e) => setEditImage(e.target.value)}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>
-                            <TextInput
-                              value={editPath}
-                              onChange={(e) => setEditPath(e.target.value)}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>
-                            <a
-                              className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500"
-                              onClick={() => {
-                                try {
-                                  axios
-                                    .post(
-                                      `https://quocson.fatcatweb.top/category/${categoryByid.id}`,
-                                      {
-                                        category:
-                                          editCategory || categoryByid.category,
-                                        path: editPath || categoryByid.path,
-                                        image: editImage || categoryByid.image,
-                                      }
-                                    )
-                                    .then((res: any) => {
-                                      if (res.data) {
-                                        toast("Update category successfully", {
-                                          position: toast.POSITION.TOP_RIGHT,
-                                          type: toast.TYPE.SUCCESS,
-                                          className: "toast-message",
-                                        });
-                                      }
-                                      setEditModal(!editModal);
-                                    });
-                                } catch (error: any) {
-                                  console.log(error);
+                     
+
+                    
+                        <div className="grid grid-cols-4 gap-1 items-center mb-3">
+                          <h1>Category:</h1>
+                          <TextInput
+                          className="w-full col-start-2 col-end-5"
+                            value={editCategory}
+                            placeholder={categoryByid.category}
+                            onChange={(e) => setEditCategory(e.target.value)}
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-4 gap-1 items-center mb-3">
+                          <h1>Image:</h1>
+                          <Textarea
+                           className="w-full col-start-2 col-end-5"
+                          rows={3}
+                            value={editImage}
+                            placeholder={categoryByid.image}
+                            onChange={(e) => setEditImage(e.target.value)}
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-4 gap-1 items-center mb-3">
+                          <h1>Path:</h1>
+                          <TextInput
+                        className="w-full col-start-2 col-end-5"
+                            value={editPath}
+                            placeholder={categoryByid.path}
+                            onChange={(e) => setEditPath(e.target.value)}
+                          />
+                        </div>
+                    
+
+                    </div>
+
+                    <div className="flex justify-center gap-4 items-center">
+                      <Button
+                      size='sm'
+                        className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500"
+                        onClick={() => {
+                          try {
+                            axios
+                              .post(
+                                `https://quocson.fatcatweb.top/category/${categoryByid.id}`,
+                                {
+                                  category:
+                                    editCategory || categoryByid.category,
+                                  path: editPath || categoryByid.path,
+                                  image: editImage || categoryByid.image,
                                 }
-                              }}
-                            >
-                              OK
-                            </a>
-                          </Table.Cell>
-                        </Table.Row>
-                      </Table.Body>
-                    </Table>
+                              )
+                              .then((res: any) => {
+                                if (res.data) {
+                                  toast("Update category successfully", {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                    type: toast.TYPE.SUCCESS,
+                                    className: "toast-message",
+                                  });
+                                }
+                                setEditModal(!editModal);
+                              });
+                          } catch (error: any) {
+                            console.log(error);
+                          }
+                        }}
+                      >
+                        OK
+                      </Button>
+
+                      <Button
+                      size='sm'
+                      color='failure'
+                        className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500"
+                        onClick={() => {
+                          setDeleteModal(!deleteModal);
+                        }}
+                      >
+                        <FaTrash className="text-xl"/>
+                      </Button>
+                    </div>
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
@@ -274,7 +264,9 @@ function Index() {
                     </div>
 
                     <div className="mt-6 flex justify-evenly">
-                      <button
+                      <Button
+                      size='xs'
+                      color='failure'
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={() => {
@@ -299,14 +291,16 @@ function Index() {
                         }}
                       >
                         Delete
-                      </button>
-                      <button
+                      </Button>
+                      <Button
+                      size='xs'
+                      color='info'
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={() => setDeleteModal(!deleteModal)}
                       >
                         Cancel
-                      </button>
+                      </Button>
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>

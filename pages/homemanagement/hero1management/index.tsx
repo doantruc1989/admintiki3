@@ -1,11 +1,11 @@
-import CheckAuth from '@/pages/components/CheckAuth';
-import Layout from '@/pages/components/Layout';
-import { Dialog, Transition } from '@headlessui/react';
-import axios from 'axios';
-import { Breadcrumb, Table, TextInput } from 'flowbite-react';
-import React, { Fragment, ReactElement, useEffect, useState } from 'react'
-import { FaEdit, FaHome } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import CheckAuth from "@/pages/components/CheckAuth";
+import Layout from "@/pages/components/Layout";
+import { Dialog, Transition } from "@headlessui/react";
+import axios from "axios";
+import { Breadcrumb, Button, Table, Textarea, TextInput } from "flowbite-react";
+import React, { Fragment, ReactElement, useEffect, useState } from "react";
+import { FaEdit, FaHome, FaTrash } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 function Index() {
   const [categories, setCategories] = useState([] as any);
@@ -28,12 +28,14 @@ function Index() {
   }, [editModal]);
 
   return (
-    <div className='my-6'>
+    <div className="my-6">
       <Breadcrumb aria-label="Default breadcrumb example" className="my-6">
         <Breadcrumb.Item href="/" icon={FaHome}>
           Dashboard
         </Breadcrumb.Item>
-        <Breadcrumb.Item href='/homemanagement'>Categories Management</Breadcrumb.Item>
+        <Breadcrumb.Item href="/homemanagement">
+          Categories Management
+        </Breadcrumb.Item>
         <Breadcrumb.Item>Hero1 Management</Breadcrumb.Item>
       </Breadcrumb>
       <CheckAuth />
@@ -86,7 +88,7 @@ function Index() {
                             }
                           }}
                         >
-                          <FaEdit className="text-xl"/>
+                          <FaEdit className="text-xl" />
                         </a>
                       </Table.Cell>
                     </Table.Row>
@@ -115,113 +117,111 @@ function Index() {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="w-full md:w-1/2 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="text-lg my-6 text-center font-medium leading-6 text-gray-900"
                     >
                       Edit Category
                     </Dialog.Title>
 
-                    <Table hoverable={true}>
-                      <Table.Head>
-                        <Table.HeadCell>ID</Table.HeadCell>
-                        <Table.HeadCell>Category</Table.HeadCell>
-                        <Table.HeadCell>Image</Table.HeadCell>
-                        <Table.HeadCell>Path</Table.HeadCell>
-                        <Table.HeadCell>
-                          <span className="sr-only">Edit</span>
-                        </Table.HeadCell>
-                      </Table.Head>
-                      <Table.Body className="divide-y">
-                        
-                      <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                          <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            {categoryByid.id}
-                          </Table.Cell>
-                          <Table.Cell>{categoryByid.name}</Table.Cell>
-                          <Table.Cell>{categoryByid.image}</Table.Cell>
-                          <Table.Cell>{categoryByid.path}</Table.Cell>
-                          <Table.Cell>
-                           
-                          </Table.Cell>
-                        </Table.Row>
-                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                          <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                            {categoryByid.id}
-                          </Table.Cell>
-                          <Table.Cell>
-                            <TextInput
-                              value={editCategory}
-                              onChange={(e) => setEditCategory(e.target.value)}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>
-                            <TextInput
-                              value={editImage}
-                              onChange={(e) => setEditImage(e.target.value)}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>
-                            <TextInput
-                              value={editPath}
-                              onChange={(e) => setEditPath(e.target.value)}
-                            />
-                          </Table.Cell>
-                          <Table.Cell>
-                            <a
-                              className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500"
-                              onClick={() => {
-                                try {
-                                  axios
-                                    .patch(
-                                      `https://quocson.fatcatweb.top/homepage/hero/${categoryByid.id}`,
-                                      {
-                                        name:
-                                          editCategory || categoryByid.name,
-                                        path: editPath || categoryByid.path,
-                                        image: editImage || categoryByid.image,
-                                      }
-                                    )
-                                    .then((res: any) => {
-                                      if (res.data) {
-                                        toast("Update category successfully", {
-                                          position: toast.POSITION.TOP_RIGHT,
-                                          type: toast.TYPE.SUCCESS,
-                                          className: "toast-message",
-                                        });
-                                      }
-                                      setEditModal(!editModal);
-                                    });
-                                } catch (error: any) {
-                                  console.log(error);
+                    <div className="items-center w-full gap-2">
+                      <div className="grid grid-cols-4 gap-1 items-center mb-3">
+                        <h1>Category:</h1>
+                        <TextInput
+                          className="w-full col-start-2 col-end-5"
+                          value={editCategory}
+                          placeholder={categoryByid.name}
+                          onChange={(e) => setEditCategory(e.target.value)}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-4 gap-1 items-center mb-3">
+                        <h1>Image:</h1>
+                        <Textarea
+                          className="w-full col-start-2 col-end-5"
+                          rows={3}
+                          value={editImage}
+                          placeholder={categoryByid.image}
+                          onChange={(e) => setEditImage(e.target.value)}
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-4 gap-1 items-center mb-3">
+                        <h1>Path:</h1>
+                        <TextInput
+                          className="w-full col-start-2 col-end-5"
+                          value={editPath}
+                          placeholder={categoryByid.path}
+                          onChange={(e) => setEditPath(e.target.value)}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex justify-center gap-4 items-center">
+                      <Button
+                      size='sm'
+                        className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500"
+                        onClick={() => {
+                          try {
+                            axios
+                              .patch(
+                                `https://quocson.fatcatweb.top/homepage/hero/${categoryByid.id}`,
+                                {
+                                  name:
+                                    editCategory || categoryByid.name,
+                                  path: editPath || categoryByid.path,
+                                  image: editImage || categoryByid.image,
                                 }
-                              }}
-                            >
-                              OK
-                            </a>
-                          </Table.Cell>
-                        </Table.Row>
-                      </Table.Body>
-                    </Table>
+                              )
+                              .then((res: any) => {
+                                if (res.data) {
+                                  toast("Update category successfully", {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                    type: toast.TYPE.SUCCESS,
+                                    className: "toast-message",
+                                  });
+                                }
+                                setEditModal(!editModal);
+                              });
+                          } catch (error: any) {
+                            console.log(error);
+                          }
+                        }}
+                      >
+                        OK
+                      </Button>
+
+                      {/* <Button
+                      size='sm'
+                      color='failure'
+                        className="font-medium cursor-pointer text-blue-600 hover:underline dark:text-blue-500"
+                        onClick={() => {
+                          setDeleteModal(!deleteModal);
+                        }}
+                      >
+                        <FaTrash className="text-xl"/>
+                      </Button> */}
+                    </div>
+
+                    
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
             </div>
           </Dialog>
         </Transition>
-
       </div>
     </div>
-  )
+  );
 }
 
 Index.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <Layout>
-          <>{page}</>
-        </Layout>
-    );
-  };
+  return (
+    <Layout>
+      <>{page}</>
+    </Layout>
+  );
+};
 
-export default Index
+export default Index;

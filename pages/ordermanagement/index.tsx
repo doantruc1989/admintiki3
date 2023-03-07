@@ -12,6 +12,7 @@ import {
 import { toast } from "react-toastify";
 import CheckAuth from "../components/CheckAuth";
 import Layout from "../components/Layout";
+import Pagi from "../components/Pagi";
 
 function Index() {
   const [orders, setOrders] = useState([] as any);
@@ -131,6 +132,10 @@ function Index() {
       console.log(error);
     }
   };
+
+  const handlePageChange =(newPage :number) => {
+    setPage(newPage)
+  }
 
   return (
     <div className="my-6">
@@ -360,17 +365,7 @@ function Index() {
       </div>
 
       <div className="flex justify-center mt-6">
-        <Pagination
-          currentPage={page}
-          totalPages={8}
-          onPageChange={() => {
-            if (page < 8) {
-              setPage(page + 1);
-            } else {
-              setPage(1);
-            }
-          }}
-        />
+      <Pagi page={page} onPageChange={handlePageChange}/>
       </div>
 
       <div className="mx-auto w-full">

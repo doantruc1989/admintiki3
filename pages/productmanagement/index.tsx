@@ -9,6 +9,7 @@ import {
   Textarea,
   TextInput,
 } from "flowbite-react";
+import Link from "next/link";
 import React, { Fragment, ReactElement, useEffect, useState } from "react";
 import {
   FaHome,
@@ -20,6 +21,7 @@ import {
 import { toast } from "react-toastify";
 import CheckAuth from "../components/CheckAuth";
 import Layout from "../components/Layout";
+import Pagi from "../components/Pagi";
 
 function Index() {
   const [products, setProducts] = useState([] as any);
@@ -52,6 +54,7 @@ function Index() {
   const [filterQuantity, setFilterQuantity] = useState("adminasc");
   const [filterCategory, setFilterCategory] = useState("adminasc");
   const [page, setPage] = useState(1);
+
 
   useEffect(() => {
     setDisable(newProductName !== "" &&
@@ -90,7 +93,7 @@ function Index() {
   useEffect(() => {
     try {
       axios
-        .get(`https://quocson.fatcatweb.top/product?page=${page}`)
+        .get(`https://quocson.fatcatweb.top/v2/product?page=${page}`)
         .then((res) => {
           setProducts(res.data);
         });
@@ -174,6 +177,10 @@ function Index() {
       console.log(error);
     }
   };
+
+  const handlePageChange =(newPage :number) => {
+    setPage(newPage)
+  }
 
   return (
     <div className="my-6">
@@ -307,15 +314,23 @@ function Index() {
                       className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     >
                       <Table.Cell>
+  
                         <img
                           className="h-10 w-10"
                           src={product.image}
                           alt={product.productName}
                         />
+    
                       </Table.Cell>
-                      <Table.Cell>{product.productName}</Table.Cell>
+                      <Table.Cell>
+                     
+                          {product.productName}
+                   
+                        
+                        </Table.Cell>
                       <Table.Cell className="text-end">
-                        {Intl.NumberFormat().format(product.price)}đ
+                      {Intl.NumberFormat().format(product.price)}đ
+                        
                       </Table.Cell>
                       <Table.Cell className="text-end">
                         {Intl.NumberFormat().format(product.initialPrice)}đ
@@ -333,7 +348,7 @@ function Index() {
                             try {
                               axios
                                 .get(
-                                  `https://quocson.fatcatweb.top/product/${product.id}`
+                                  `https://quocson.fatcatweb.top/v2/product/${product.id}`
                                 )
                                 .then((res) => {
                                   setProductById(res.data);
@@ -350,22 +365,13 @@ function Index() {
                   );
                 })
               : null}
+              
           </Table.Body>
         </Table>
       </div>
 
       <div className="flex justify-center mt-6">
-        <Pagination
-          currentPage={page}
-          totalPages={8}
-          onPageChange={() => {
-            if (page < 8) {
-              setPage(page + 1);
-            } else {
-              setPage(1);
-            }
-          }}
-        />
+        <Pagi page={page} onPageChange={handlePageChange}/>
       </div>
 
       <div className="mx-auto w-full">
